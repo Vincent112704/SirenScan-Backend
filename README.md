@@ -269,60 +269,6 @@ This allows:
 
 ---
 
-## 📁 Suggested Backend Folder Structure
-
-Recommended structure for clean backend development:
-
-```
-backend/
- ├── app/
- │   ├── main.py                 # FastAPI entry point
- │   ├── routes/
- │   │   ├── scan.py              # scan endpoints
- │   │   ├── health.py            # health check endpoints
- │   ├── services/
- │   │   ├── parser.py            # email parsing + cleanup
- │   │   ├── extractor.py         # URL/domain extraction
- │   │   ├── classifier.py        # Transformers + PyTorch inference
- │   │   ├── virustotal.py        # VirusTotal integration
- │   │   ├── hibp.py              # HaveIBeenPwned integration
- │   │   ├── openai_report.py     # AI explanation generator
- │   │   ├── mailgun.py           # inbound email handling
- │   │   ├── resend.py            # outbound notifications
- │   ├── db/
- │   │   ├── firebase.py          # Firebase client + collections
- │   ├── models/
- │   │   ├── schemas.py           # Pydantic request/response schemas
- │   ├── utils/
- │   │   ├── validators.py        # input validation
- │   │   ├── sanitizers.py        # content sanitization
- ├── requirements.txt
- └── README.md
-```
-
----
-
-## 🔑 Environment Variables
-
-Store all secrets securely using environment variables:
-
-```bash
-# Database
-FIREBASE_CREDENTIALS_PATH=...
-
-# Threat Intelligence
-VIRUSTOTAL_API_KEY=...
-HIBP_API_KEY=...
-
-# AI Reporting
-OPENAI_API_KEY=...
-
-# Email Services
-MAILGUN_API_KEY=...
-MAILGUN_DOMAIN=...
-RESEND_API_KEY=...
-```
-
 ---
 
 ## 🔐 Security Notes
@@ -359,5 +305,3 @@ SirenScan backend combines **ML detection + threat intelligence + breach checks 
 ✅ actionable for organizations
 
 ---
-
-If you want, I can also add a **“Backend Endpoints”** section with example request/response JSON for `/scan`, `/scan/{id}`, and `/history`.
