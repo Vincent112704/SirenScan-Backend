@@ -21,10 +21,8 @@ SirenScan is a **P2B Phishing Intelligence Platform** designed to help organizat
 4. [Backend Flow (How It Works)](#-backend-flow-how-it-works)
 5. [API Integrations](#-api-integrations)
 6. [Data Stored in Firebase](#-data-stored-in-firebase)
-7. [Suggested Backend Folder Structure](#-suggested-backend-folder-structure)
-8. [Environment Variables](#-environment-variables)
-9. [Security Notes](#-security-notes)
-10. [Future Improvements](#-future-improvements)
+7. [Security Notes](#-security-notes)
+8. [Future Improvements](#-future-improvements)
 
 ---
 
