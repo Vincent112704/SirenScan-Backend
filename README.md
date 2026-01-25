@@ -57,8 +57,7 @@ Phishing attacks remain one of the most common entry points for breaches. SirenS
 
 ### **Tools**
 
-* **Git**
-* **GitHub**
+* **Git and Github** - Version control + collaboration. 
 
 ---
 
