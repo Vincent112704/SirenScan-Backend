@@ -33,7 +33,7 @@ def scan_url(url) -> dict:
         return {"error": str(e)}
 
 
-def scan_file(file_path):
+def scan_file(file_path: str) -> dict:
     FILE_ENDPOINT = "https://www.virustotal.com/api/v3/files"
     HEADER = {
         'accept': 'application/json',
@@ -60,13 +60,17 @@ def scan_file(file_path):
             status = data["data"]["attributes"]["status"]
             if status == "completed":
                 stats = data["data"]["attributes"]["stats"]
-                return stats
+                return {
+                    "analysis_id": analysis_id,
+                    "stats": stats,
+                    "file_name": data["meta"]["file_info"]["name"]
+                }
 
             time.sleep(1)
 
         raise Exception("VirusTotal file scan timed out")
     except Exception as e:
-        return f"An error occurred: {e}" 
+        return {"error": str(e)} 
 
 # report = scan_file("./src/app/services/CCS 7 Ideation.pdf")
 # print(report)

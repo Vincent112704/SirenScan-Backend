@@ -6,5 +6,5 @@ def parse_html_content(html_content):
     tag = soup.find('a')
 
     url = tag.get('href') if tag else None
-    return url if url else False
+    return url if url else None
     
