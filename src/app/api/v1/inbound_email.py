@@ -102,22 +102,26 @@ async def inbound_email(request: Request):
                     logging.info(f"Record for {hashed_email} already exists, skipping write.") 
                 else:
                     HIBP_response = HIBP_check(sender)
-                    if HIBP_response:
-                        hibp_analysis = {
-                            "email": hashed_email,
-                            "breaches": [
-                                {
-                                    "Name": b["Name"], 
-                                    "Title": b.get("Title", ""),
-                                    "Description": b.get("Description", ""),
-                                    "DataClasses": b.get("DataClasses", []),
-                                    "BreachDate": b.get("BreachDate", ""),
-                                } for b in HIBP_response
-                            ] 
-                        }
-                        print( f"Print: HIBP Analysis: {hibp_analysis}" )
-                        logging.info(f"HIBP Analysis: {hibp_analysis}")
-                        db.collection("hibp_analyses").document(hibp_id).set(hibp_analysis)
+                    if HIBP_response is None:
+                        print("HIBP check failed")
+                        print(HIBP_response)
+                        return
+                    
+                    hibp_analysis = {
+                        "email": hashed_email,
+                        "breaches": [
+                            {
+                                "Name": b["Name"], 
+                                "Title": b.get("Title", ""),
+                                "Description": b.get("Description", ""),
+                                "DataClasses": b.get("DataClasses", []),
+                                "BreachDate": b.get("BreachDate", ""),
+                            } for b in HIBP_response
+                        ] 
+                    }
+                    print( f"Print: HIBP Analysis: {hibp_analysis}" )
+                    logging.info(f"HIBP Analysis: {hibp_analysis}")
+                    db.collection("hibp_analyses").document(hibp_id).set(hibp_analysis)
                     
                 # processing virus total url and saving to DB
                 url_analysis = {}

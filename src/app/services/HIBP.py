@@ -19,7 +19,11 @@ def HIBP_check(email):
         }   
         response = requests.get(api_endpoint, headers=header, params=params,timeout=10)
     
-        return response.json() if response.status_code == 200 else None
+        if response.status_code == 200:
+            return response.json()  # breaches found
+        elif response.status_code == 404:
+            return []
+        
     except Exception as e:
         print(f"Error checking HIBP for {email}: {e}")
         return None
