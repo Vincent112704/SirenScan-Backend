@@ -22,7 +22,7 @@ TEMPLATE ="""
         3. Suggested next actions if applicable.
         4. A suggestion for the user on the best course of action regarding the email (e.g., delete, mark as spam, proceed with caution).
 
-        Write clearly and professionally.
+        Write clearly and professionally. Provide the analysis STRICTLY in plain text only. Do not use Markdown, bolding (**), or headers (#)
         """
 
 
