@@ -6,7 +6,6 @@ from app.services.llm_wrapper import LLM_interface
 from app.services.virus_total import scan_url, scan_file
 from app.services.html_parser import parse_html_content
 from app.services.HIBP import HIBP_check
-from app.services.model import model_interface
 from app.services.email_hasher import hash_email
 from app.services.resend_service import send_email
 from google.cloud.firestore_v1 import DocumentSnapshot
@@ -17,9 +16,10 @@ import logging
 from starlette.datastructures import UploadFile
 import tempfile
 import os
+from app.services.test import model_interface1
 
 logger = logging.getLogger("uvicorn.error")  
-logger.info("This will appear in the console")
+
 router = APIRouter()
 
 @router.post("/mailgun/inbound", response_model=None)
@@ -36,9 +36,10 @@ async def inbound_email(request: Request):
         print( f"Print: token-Id: {inbound_id}" )
 
         if subject is None or body_plain is None or body_html is None:
+            print("Missing required email fields.")
             return JSONResponse(status_code=400, content={"error": "Missing required email fields."})
         else:
-
+            print("Inside else block, all fields are present.")
             doc_ref = db.collection("inbound_emails").document(str(inbound_id))
             doc_snapshot = cast(DocumentSnapshot, doc_ref.get())
 
@@ -48,7 +49,7 @@ async def inbound_email(request: Request):
                 JSONResponse({"status": "duplicate"})
             else:
                 model_arg = f"Subject: {subject}\n\n{body_plain}"
-                model_result = model_interface(model_arg)
+                model_result = model_interface1(model_arg)
 
                 hashed_email = hash_email(str(sender).lower().strip())
                 #processing email and saving to DB
