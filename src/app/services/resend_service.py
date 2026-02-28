@@ -26,8 +26,8 @@ def send_email(email_address: str):
 
             <p>You can now view the full results and detailed breakdown on our platform:</p>
             <p>
-              👉 <a href="https://www.template.online" target="_blank" rel="noopener noreferrer">
-                www.template.online
+              👉 <a href="siren-scan-frontend.vercel.app" target="_blank" rel="noopener noreferrer">
+                siren-scan-frontend.vercel.app
               </a>
             </p>
 
