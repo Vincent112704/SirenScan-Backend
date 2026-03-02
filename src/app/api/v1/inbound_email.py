@@ -103,6 +103,7 @@ async def process_email_async(
     print("Attachment path in async task:", attachment_path)
     logging.info(f"Attachment path in async task: {attachment_path}")
     try:
+        print("Starting async processing for email:", inbound_id)
         doc_ref = db.collection("inbound_emails").document(str(inbound_id))
         model_arg = f"Subject: {subject}\n\n{body_plain}"
         model_result = model_interface1(model_arg)
@@ -157,13 +158,19 @@ async def process_email_async(
         # processing virus total url and saving to DB
         url_analysis = {}
         isURL = parse_html_content(body_html)
+        print(f"Extracted URL: {isURL}")
+        logging.info(f"logger Extracted URL: {isURL}")
         if isURL:
             url_response = scan_url(isURL)
             url_id = url_response.get("meta",{}).get("url_info", {}).get("id", "")
             url_db_id = f"url_{url_id}"
+            print(f"URL analysis ID: {url_db_id}")
+            logging.info(f"Logger URL analysis ID: {url_db_id}")
             doc_refVtotal = db.collection("url_analyses").document(url_db_id)
             doc_snapshot = cast(DocumentSnapshot, doc_refVtotal.get())
-            
+            print(doc_snapshot)
+            print("In isURL if statement block")
+            logging.info("In isURL if statement block")
             if not doc_snapshot.exists:
                 url_analysis = {
                     "analysis_id": url_response.get("meta",{}).get("url_info", {}).get("id", ""),
@@ -173,6 +180,7 @@ async def process_email_async(
                     "inbound_email_id": inbound_id, 
                     "email_sender": hashed_email
                 }
+                print(f"Inside URL analysis")
                 
                 db.collection("url_analyses").document(url_db_id).set(url_analysis)
             else: 

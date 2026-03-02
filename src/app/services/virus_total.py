@@ -23,8 +23,7 @@ def scan_url(url) -> dict:
         if response.status_code == 200:
             analysis_id = response.json()['data']['id']
             results = get_completed_analysis(analysis_id)
-            
-            # print(results)
+        
             return results
         else: 
             # return f"Error: {response.status_code} - {response.text}"
@@ -55,7 +54,7 @@ def scan_file(file_path: str) -> dict:
 
         # Increase max attempts and use exponential backoff
         max_attempts = 60  # Up to 5 minutes
-        wait_time = 2  # Start with 2 seconds
+        
 
         for attempt in range(max_attempts): 
             result = requests.get(analysis_endpoint, headers={'accept': 'application/json', 'x-apikey': VIRUS_TOTAL_API_KEY})
@@ -71,9 +70,9 @@ def scan_file(file_path: str) -> dict:
                     "file_name": file_name
                 }
             
-            # Exponential backoff: 2s, 4s, 8s, then cap at 10s
-            current_wait = min(wait_time * (2 ** min(attempt // 10, 2)), 10)
-            time.sleep(1)
+            
+            current_wait = min(2 * (1 + attempt // 10), 10) # Adds 0.2s very iteration, waits 10 seconds at most
+            time.sleep(current_wait)
 
         raise Exception("VirusTotal file scan timed out")
     except Exception as e:
@@ -101,5 +100,4 @@ def get_completed_analysis(analysis_id):
         print(f"Status is '{status}'... waiting 10 seconds.")
         time.sleep(10)  # Wait before checking again
 
-# url_report = scan_url("hhttps://neo4j.com/blog/twin4j/this-week-in-neo4j-context-graph-dify-cypher-graphrag-and-more/?mkt_tok=NzEwLVJSQy0zMzUAAAGfjH4ZW_E5IMLeT5a2k0nhZSC9j76UwUbRBdOXKVNpZYMLPabIYAJaxI7-wgS2Q1nnEjFlfLNRQyOek2mzQqBnyecsZJeFUwe7_4AG_IaiN6XR_H4")
-# print(url_report)
+
