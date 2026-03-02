@@ -26,15 +26,15 @@ def send_email(email_address: str):
 
             <p>You can now view the full results and detailed breakdown on our platform:</p>
             <p>
-              👉 <a href="siren-scan-frontend.vercel.app" target="_blank" rel="noopener noreferrer">
-                siren-scan-frontend.vercel.app
+              👉 <a href="https://sirenscan.cosedevs.com" target="_blank" rel="noopener noreferrer">
+                https://sirenscan.cosedevs.com
               </a>
             </p>
 
             <p>If you have any questions or need further assistance, feel free to reply to this email.</p>
 
             <p>Stay safe,<br>
-            <strong>The Template Security Team</strong></p>
+            <strong>SirenScan Team</strong></p>
         """,
     "reply_to": "no-reply@sirenscan.online"
   }
