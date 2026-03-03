@@ -199,8 +199,30 @@ async def process_email_async(
         logger.info(f"Email {inbound_id} processed successfully")
 
     except Exception as e:
-        logging.error(f"Error processing email {inbound_id}: {str(e)}")
+        import traceback
+        import uuid
+        from datetime import datetime
+        
+        error_id = str(uuid.uuid4())
+        timestamp = datetime.utcnow().isoformat()
+        error_message = str(e)
+        error_traceback = traceback.format_exc()
+        
+        # Log with full traceback and context
+        logging.error(
+            f"Email Processing Failed | Error ID: {error_id} | "
+            f"Inbound ID: {inbound_id} | Sender: {sender} | Subject: {subject} | "
+            f"Timestamp: {timestamp} | Error: {error_message}\n"
+            f"Traceback:\n{error_traceback}"
+        )
+        
+        # Update database with comprehensive error information
         db.collection("inbound_emails").document(inbound_id).update({
             "status": "failed",
-            "error": str(e)
+            "error": error_message,
+            "error_id": error_id,
+            "error_traceback": error_traceback,
+            "failed_at": timestamp,
+            "sender": sender,
+            "subject": subject
         })
