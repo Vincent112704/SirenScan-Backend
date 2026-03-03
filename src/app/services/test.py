@@ -2,9 +2,16 @@ import requests
 
 
 def model_interface1(email_text: str) -> str:
-    data = {"inputs": email_text}
+    data = {"inputs": email_text[:1000]}  # Truncate to 512 characters for model input
     response = requests.post("https://ig7vp8lnan86bmhg.us-east-1.aws.endpoints.huggingface.cloud", json=data)
-    res = response.json()[0]["label"]
-    
+    res = response.json()[0]['label']
+    print(response.json())
+    print(res)
     return "Phishing" if res == "LABEL_1" else "Legitimate"
 
+# test1 = '''
+# ---------- Forwarded message --------- From: Krishnan Mahinay <kin3.mahinay@gmail.com> Date: Tue, Mar 3, 2026 at 12:31 PM Subject: Fwd: kin3.mahinay, Your_Cloud_Account has been locked on 02-09-2026. Your_photos and videos will be_removed! To: <test@sirenscan.online> ---------- Forwarded message --------- From: Krishnan Mahinay <kin3.mahinay@gmail.com> Date: Mon, Mar 2, 2026 at 11:25 PM Subject: Fwd: kin3.mahinay, Your_Cloud_Account has been locked on 02-09-2026. Your_photos and videos will be_removed! To: <test@sirenscan.online> ---------- Forwarded message --------- From: Payment-Declined <nooreply@fxq.qgrirmuwsvdzw.us> Date: Mon, Feb 9, 2026 at 5:15 PM Subject: kin3.mahinay, Your_Cloud_Account has been locked on 02-09-2026. Your_photos and videos will be_removed! To: <kin3.mahinay@gmail.com> <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&sfwez=545-1924&lm=1350070BOTO28199&sd=4&page=EtN2xILcGtwzBN6> Account details Issue - Cloud Storage <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&sfwez=545-1924&lm=1350070BOTO28199&sd=4&page=EtN2xILcGtwzBN6> *Dear User,* We encountered an issue while attempting to renew your Cloud storage subscription. *Unfortunately, your current payment method is not available.* To ensure your Cloud storage continues without interruption, please update your account details. *Subscription ID:* 6181983 *Product:* Cloud Storage Premium *Expiration Date:* 02-09-2026 If you do not update your payment method, you may lose access to your Cloud storage, which may prevent you from saving and syncing your data such as photos, videos, and documents. <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&sfwez=545-1924&lm=1350070BOTO28199&sd=4&page=EtN2xILcGtwzBN6> <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&sfwez=545-1924&lm=1350070BOTO28199&sd=4&page=EtN2xILcGtwzBN6>Update Account Details <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&rqzxh=545-1924&lm=1350070NDYV28199&sd=4&page=8knVTwZHBcVe1n7> For your security, we recommend: - Always accessing your account through our official website - Never sharing your password with anyone - Ensuring your contact information is up to date Thank you for trusting us with your data. Best regards, Cloud Storage Customer Service Team Contact Support <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&ndvlj=545-1924&lm=1350070TPFV28199&sd=4&page=ESjAODPxcmDZOYH> | Account Settings <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=4&d117283&uxfoc=545-1924&lm=1350070AMWQ28199&sd=4&page=JeVx85Fyx29EVYQ> © 2023 Cloud Storage. All rights reserved. 123 Cloud Drive, Data Center, CA 94107 To Unsubscribe Click Here <https://storage.googleapis.com/whilewait/itcomessuccess.html#index.php?search=6&d117283&iugck=545-1924&lm=1350070JKOL28199&sd=4&page=2JH0B73C7PdDCBl>
+ 
+# '''
+
+# print(model_interface1(test1))
