@@ -128,7 +128,7 @@ async def process_email_async(
         hibp_id = f"hibp_{hashed_email}"
         doc_refHIBP = db.collection("hibp_analyses").document(hibp_id)
         doc_snapshot = cast(DocumentSnapshot, doc_refHIBP.get())
-        print( f"Print: Checking HIBP for {doc_snapshot}" )
+        
 
         if doc_snapshot.exists:
             logging.info(f"Record for {hashed_email} already exists, skipping write.") 
@@ -138,7 +138,6 @@ async def process_email_async(
                 print("HIBP check failed")
                 print(HIBP_response)
                 return
-            
             hibp_analysis = {
                 "email": hashed_email,
                 "breaches": [
@@ -158,8 +157,7 @@ async def process_email_async(
         # processing virus total url and saving to DB
         url_analysis = {}
         isURL = parse_html_content(body_html)
-        print(f"Extracted URL: {isURL}")
-        logging.info(f"logger Extracted URL: {isURL}")
+        
         if isURL:
             url_response = scan_url(isURL)
             url_id = url_response.get("meta",{}).get("url_info", {}).get("id", "")
@@ -168,9 +166,7 @@ async def process_email_async(
             logging.info(f"Logger URL analysis ID: {url_db_id}")
             doc_refVtotal = db.collection("url_analyses").document(url_db_id)
             doc_snapshot = cast(DocumentSnapshot, doc_refVtotal.get())
-            print(doc_snapshot)
-            print("In isURL if statement block")
-            logging.info("In isURL if statement block")
+            
             if not doc_snapshot.exists:
                 url_analysis = {
                     "analysis_id": url_response.get("meta",{}).get("url_info", {}).get("id", ""),
@@ -180,7 +176,6 @@ async def process_email_async(
                     "inbound_email_id": inbound_id, 
                     "email_sender": hashed_email
                 }
-                print(f"Inside URL analysis")
                 
                 db.collection("url_analyses").document(url_db_id).set(url_analysis)
             else: 
