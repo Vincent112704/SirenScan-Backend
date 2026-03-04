@@ -31,7 +31,8 @@ async def inbound_email(request: Request, background_tasks: BackgroundTasks):
         body_plain = form.get("body-plain")
         body_html = form.get("body-html")
         inbound_id = form.get("token")
-        attachment = form.get("attachment-1") 
+        attachment = form.get("attachment-1")
+        date = form.get("Date") 
         
         
         if not all([sender, subject, body_plain, body_html]):
@@ -53,6 +54,7 @@ async def inbound_email(request: Request, background_tasks: BackgroundTasks):
                 "subject": subject,
                 "body_plain": body_plain,
                 "body_html": body_html, 
+                "Date": date,
                 "status": "processed"
             }
             
